@@ -1,46 +1,51 @@
-const inquirer=require("inquirer")
-const db=require("./config/connection")
+const inquirer = require("inquirer")
+require('console.table')
+const db = require('./db')
 
-db.connect( ()=>{
-    menu()
-})
+menu()
 
-const menuQuestion=[
-    {
-        type:"list",
-        name:"menu",
-        message:"choose the following options:",
-        choices:["view all departments"," view all roles","view all employees","add a department","adda role","add an employee","update an employee role"]
 
-    }
-]
-const employeeAddQuestions=[
-    {
-        type:"input",
-        name:"first_name",
-        message:"what is your first name?",
-    },
-    {
-        type:"input",
-        name:"last_name",
-        message:"what is your last name?",
-    }
-]
-function menu(){
-    inquirer.prompt(menuQuestion)
-    .then(response=>{
-        if(response.menu==="view all employees"){
-            viewEmployees()
-        }
-        else if(response.menu==="add an employee"){
-                addEmployees()
-        }
+
+function menu() {
+    inquirer.prompt({
+        type: "list",
+        name: "menu",
+        message: "choose the following options:",
+        choices: [
+            "view all departments",
+            " view all roles",
+            "view all employees",
+            "add a department",
+            "add a role",
+            "add an employee",
+            "update an employee role",
+            'Exit'
+        ]
+
     })
+        .then(response => {
+
+            switch (response.menu) {
+                case "view all employees":
+                    viewEmployees()
+                    break;
+                case "add an employee":
+                    addEmployees()
+                    break;
+                default:
+                    process.exit()
+            }
+
+
+        })
 }
 
-function viewEmployees(){
-    db.query
+function viewEmployees() {
+    db.findEmployees().then(([data]) => {
+        console.table(data)
+    }).then(() => menu())
 }
-function addEmployees(){
+
+function addEmployees() {
 
 }
