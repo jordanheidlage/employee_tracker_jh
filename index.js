@@ -61,30 +61,32 @@ function viewEmployees() {
     }).then(() => menu())
 }
 function viewDepartments() {
-    db.findEmployees().then(([data]) => {
+    db.findDepartments().then(([data]) => {
         console.table(data)
     }).then(() => menu())
 }
 function viewRoles() {
-    db.findEmployees().then(([data]) => {
+    db.findRoles().then(([data]) => {
         console.table(data)
     }).then(() => menu())
 }
 function addEmployees() {
-    db.findEmployees().then(([data]) => {
+    db.insertEmployee().then(([data]) => {
         console.table(data)
     }).then(() => menu())
 }
 function addDepartments() {
-    db.findEmployees().then(([data]) => {
+    db.insertDepartment().then(([data]) => {
         console.table(data)
     }).then(() => menu())
 }
 function addRoles() {
-    db.findEmployees().then(([data]) => {
+    db.insertRole().then(([data]) => {
         console.table(data)
     }).then(() => menu())
 }
-function addEmployees() {
-    db.findEmployees
+function updateRole() {
+    db.updateEmployee().then(([data]) => {
+        console.table(data)
+    }).then(() => menu())
 }
