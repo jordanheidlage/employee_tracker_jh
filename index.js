@@ -71,22 +71,41 @@ function viewRoles() {
     }).then(() => menu())
 }
 function addEmployees() {
-    db.insertEmployee().then(([data]) => {
-        console.table(data)
-    }).then(() => menu())
+
 }
 function addDepartments() {
-    db.insertDepartment().then(([data]) => {
-        console.table(data)
-    }).then(() => menu())
+    //    add department prompt - name of new department
+    inquirer.prompt([
+        {
+            name: "name",
+            type: "input",
+            message: "What's the name of the new department?",
+        },
+    ])
+        .then((answer) => {
+            console.log(answer);
+            db.insertDepartment(answer)
+        }).then(() => menu())
 }
 function addRoles() {
-    db.insertRole().then(([data]) => {
-        console.table(data)
-    }).then(() => menu())
+    // select which department to add role to
+    db.findDepartments().then(([data]) => {
+        const departmentArr = data.map(({ id, name }) => ({
+            name: name,
+            value: id
+        }));
+        inquirer.prompt([
+            {
+                name: "title",
+                type: "input",
+                message: "What's the name of the new role?",
+            }
+        ])
+
+
+    }
+    )
 }
 function updateRole() {
-    db.updateEmployee().then(([data]) => {
-        console.table(data)
-    }).then(() => menu())
+
 }

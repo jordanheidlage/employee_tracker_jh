@@ -8,16 +8,16 @@ class Join {
         return this.connection.promise().query('SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name as department, role.salary, CONCAT(mgr.first_name, " ",mgr.last_name) as manager FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department.id LEFT JOIN employee as mgr ON mgr.id = employee.manager_id');
     }
     findDepartments(){
-        return this.connection.promise().query('SELECT department.name');
+        return this.connection.promise().query('SELECT * FROM department ORDER BY department.id');
     }
     findRoles(){
-        return this.connection.promise().query('SELECT role.id');
+        return this.connection.promise().query('SELECT * FROM role ORDER BY role.id');
     }
     insertDepartment(department){
-        return this.connection.promise().query('');
+        return this.connection.promise().query("INSERT INTO department SET ?", department);
     }
     insertRole(role){
-        return this.connection.promise().query('');
+        return this.connection.promise().query('INSERT INTO role SET ?', role);
     }
     insertEmployee(employee){
         return this.connection.promise().query('');
