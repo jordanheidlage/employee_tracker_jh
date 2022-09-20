@@ -13,7 +13,7 @@ function menu() {
         message: "choose the following options:",
         choices: [
             "view all departments",
-            " view all roles",
+            "view all roles",
             "view all employees",
             "add a department",
             "add a role",
@@ -29,8 +29,23 @@ function menu() {
                 case "view all employees":
                     viewEmployees()
                     break;
+                case "view all departments":
+                    viewDepartments()
+                    break;
+                case "view all roles":
+                    viewRoles()
+                    break;
                 case "add an employee":
                     addEmployees()
+                    break;
+                case "add a department":
+                    addDepartments()
+                    break;
+                case "add a role":
+                    addRoles()
+                    break;
+                case "update an employee role":
+                    updateRole()
                     break;
                 default:
                     process.exit()
@@ -45,7 +60,31 @@ function viewEmployees() {
         console.table(data)
     }).then(() => menu())
 }
-
+function viewDepartments() {
+    db.findEmployees().then(([data]) => {
+        console.table(data)
+    }).then(() => menu())
+}
+function viewRoles() {
+    db.findEmployees().then(([data]) => {
+        console.table(data)
+    }).then(() => menu())
+}
 function addEmployees() {
-
+    db.findEmployees().then(([data]) => {
+        console.table(data)
+    }).then(() => menu())
+}
+function addDepartments() {
+    db.findEmployees().then(([data]) => {
+        console.table(data)
+    }).then(() => menu())
+}
+function addRoles() {
+    db.findEmployees().then(([data]) => {
+        console.table(data)
+    }).then(() => menu())
+}
+function addEmployees() {
+    db.findEmployees
 }
