@@ -71,8 +71,32 @@ function viewRoles() {
     }).then(() => menu())
 }
 function addEmployees() {
-    db.insertEmployee().then(([data]))
-
+    inquirer.prompt([
+        {
+            name: "first_name",
+            type: "input",
+            message: "What's the employees first name?"
+        },
+        {
+            name: "last_name",
+            type: "input",
+            message: "What's the employees last name?"
+        },
+        {
+            name: "role_id",
+            type: "input",
+            message: "What's the employees role id?"
+        },
+        {
+            name: "manager_id",
+            type: "input",
+            message: "What's the manager's id?"
+        },
+    ])
+    .then((answer)=>{
+        console.log(answer);
+        db.insertEmployee(answer)
+    }).then(() => menu ())
 }
 function addDepartments() {
     //    add department prompt - name of new department
