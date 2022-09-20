@@ -71,6 +71,7 @@ function viewRoles() {
     }).then(() => menu())
 }
 function addEmployees() {
+    db.insertEmployee().then(([data]))
 
 }
 function addDepartments() {
@@ -99,10 +100,23 @@ function addRoles() {
                 name: "title",
                 type: "input",
                 message: "What's the name of the new role?",
-            }
+            },
+            {
+                name: "salary",
+                type: "input",
+                message: "What's the salary of the new role?",
+            },
+            {
+                name: "department_id",
+                type: "list",
+                message: "What's the department of the new role?",
+                choices: departmentArr
+            },
         ])
-
-
+            .then((answer) => {
+                console.log(answer);
+                db.insertRole(answer)
+            }).then(() => menu())
     }
     )
 }
