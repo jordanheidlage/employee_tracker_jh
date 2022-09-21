@@ -71,6 +71,12 @@ function viewRoles() {
     }).then(() => menu())
 }
 function addEmployees() {
+    db.findRoles().then(([data]) => {
+        const roleArray = data.map(({ id, title }) => ({
+            name: title,
+            value: id
+        }));
+    })
     inquirer.prompt([
         {
             name: "first_name",
@@ -84,13 +90,14 @@ function addEmployees() {
         },
         {
             name: "role_id",
-            type: "input",
-            message: "What's the employees role id?"
+            type: "list",
+            message: "What's the employees role id?",
+            choices: roleArray
             // dropdown list of roles
         },
         {
             name: "manager_id",
-            type: "input",
+            type: "list",
             message: "What's the manager's id?"
             // dropdown list of managers
         },
@@ -117,8 +124,8 @@ function addDepartments() {
 function addRoles() {
     // select which department to add role to
     db.findDepartments().then(([data]) => {
-        const departmentArr = data.map(({ id, name }) => ({
-            name: name,
+        const departmentArr = data.map(({ id, title }) => ({
+            name: title,
             value: id
         }));
         inquirer.prompt([
