@@ -86,11 +86,13 @@ function addEmployees() {
             name: "role_id",
             type: "input",
             message: "What's the employees role id?"
+            // dropdown list of roles
         },
         {
             name: "manager_id",
             type: "input",
             message: "What's the manager's id?"
+            // dropdown list of managers
         },
     ])
     .then((answer)=>{
@@ -145,5 +147,21 @@ function addRoles() {
     )
 }
 function updateRole() {
+    db.findEmployees().then(([data]) => {
+        const newRole = data.map(({ id, title }) => ({
+            name: title,
+            value: id
+        }));
+        inquirer.prompt([
+            {
+                name: "title",
+                type: "list",
+                message: "What role should be updated?",
+                choices: newRole
+            },
+
+        ])
+    })
+    // USE ADDROLES TO FIGURE THIS OUT
 
 }

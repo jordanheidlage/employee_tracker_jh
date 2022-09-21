@@ -23,7 +23,7 @@ class Join {
         return this.connection.promise().query('INSERT INTO employee SET ?', employee);
     }
     updateEmployee(employee, role){
-        return this.connection.promise().query('');
+        return this.connection.promise().query('UPDATE role SET ?', role);
     }
 }
 
