@@ -72,7 +72,7 @@ function viewRoles() {
 }
 function addEmployees() {
     db.findRoles().then(([data]) => {
-        const roleArray = data.map(({ id, title }) => ({
+         roleArray = data.map(({ id, title }) => ({
             name: title,
             value: id
         }));
@@ -97,7 +97,7 @@ function addEmployees() {
         },
         {
             name: "manager_id",
-            type: "list",
+            type: "input",
             message: "What's the manager's id?"
             // dropdown list of managers
         },
