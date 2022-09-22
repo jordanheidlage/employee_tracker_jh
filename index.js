@@ -127,7 +127,7 @@ function deleteEmployees() {
         }));
         inquirer.prompt([
             {
-                name: "employee.name",
+                name: "employee",
                 type: "list",
                 message: "What's the name of the employee that you're removing from the system?",
                 choices: employeeArray
@@ -215,7 +215,7 @@ function updateRole() {
             ])
                 .then((answer) => {
                     console.log(answer);
-                    db.updateEmployee(answer)
+                    db.updateEmployee(answer.employee, answer.role_id)
                 }).then(() => menu())
         })
     })
