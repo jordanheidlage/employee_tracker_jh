@@ -23,10 +23,10 @@ class Join {
         return this.connection.promise().query('INSERT INTO employee SET ?', employee);
     }
     deleteEmployee(employee){
-        return this.connection.promise().query('DELETE FROM employee SET ?', employee);
+        return this.connection.promise().query('DELETE FROM employee SET WHERE employee.name = ?', employee);
     }
     updateEmployee(employee, role){
-        return this.connection.promise().query('UPDATE employee SET employee.role_id = ? WHERE employee.id = ?', employee, role);
+        return this.connection.promise().query('UPDATE employee SET role.id WHERE ', employee, role);
     }
 }
 

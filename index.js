@@ -18,6 +18,7 @@ function menu() {
             "add a department",
             "add a role",
             "add an employee",
+            "delete an employee",
             "update an employee role",
             'Exit'
         ]
@@ -37,6 +38,9 @@ function menu() {
                     break;
                 case "add an employee":
                     addEmployees()
+                    break;
+                case "delete an employee":
+                    deleteEmployees()
                     break;
                 case "add a department":
                     addDepartments()
@@ -72,40 +76,69 @@ function viewRoles() {
 }
 function addEmployees() {
     db.findRoles().then(([data]) => {
-         roleArray = data.map(({ id, title }) => ({
+        let roleArray = data.map(({ id, title }) => ({
             name: title,
             value: id
         }));
+        db.findEmployees().then(([data]) => {
+            let managerArray = data.map(({ id, first_name, last_name}) => ({
+                name: first_name + " " + last_name,
+                value: id
+            }))
+            inquirer.prompt([
+                {
+                    name: "first_name",
+                    type: "input",
+                    message: "What's the employees first name?"
+                },
+                {
+                    name: "last_name",
+                    type: "input",
+                    message: "What's the employees last name?"
+                },
+                {
+                    name: "role_id",
+                    type: "list",
+                    message: "What's the employees role?",
+                    choices: roleArray
+                    // dropdown list of roles
+                },
+                {
+                    name: "manager_id",
+                    type: "list",
+                    message: "What's the manager's id?",
+                    choices: managerArray
+                    // dropdown list of managers
+                },
+            ])
+
+                .then((answer) => {
+                    console.log(answer);
+                    db.insertEmployee(answer)
+                }).then(() => menu())
+        })
     })
-    inquirer.prompt([
-        {
-            name: "first_name",
-            type: "input",
-            message: "What's the employees first name?"
-        },
-        {
-            name: "last_name",
-            type: "input",
-            message: "What's the employees last name?"
-        },
-        {
-            name: "role_id",
-            type: "list",
-            message: "What's the employees role id?",
-            choices: roleArray
-            // dropdown list of roles
-        },
-        {
-            name: "manager_id",
-            type: "input",
-            message: "What's the manager's id?"
-            // dropdown list of managers
-        },
-    ])
-    .then((answer)=>{
-        console.log(answer);
-        db.insertEmployee(answer)
-    }).then(() => menu ())
+}
+function deleteEmployees() {
+    db.findEmployees().then(([data]) => {
+        const employeeArray = data.map(({ id, first_name, last_name }) => ({
+            name: first_name + " " + last_name,
+            value: id
+        }));
+        inquirer.prompt([
+            {
+                name: "employee.name",
+                type: "list",
+                message: "What's the name of the employee that you're removing from the system?",
+                choices: employeeArray
+            },
+        ])
+            .then((answer) => {
+                console.log(answer);
+                db.deleteEmployee(answer)
+            }).then(() => menu())
+    }
+    )
 }
 function addDepartments() {
     //    add department prompt - name of new department
@@ -155,20 +188,36 @@ function addRoles() {
 }
 function updateRole() {
     db.findEmployees().then(([data]) => {
-        const newRole = data.map(({ id, title }) => ({
-            name: title,
+        const empArray = data.map(({ id, first_name, last_name }) => ({
+            name: first_name + last_name,
             value: id
         }));
-        inquirer.prompt([
-            {
-                name: "title",
-                type: "list",
-                message: "What role should be updated?",
-                choices: newRole
-            },
+        db.findRoles().then(([data]) => {
+            const roleArray = data.map(({ id, role_id }) => ({
+                name: role_id,
+                value: id
+            }))
 
-        ])
+            inquirer.prompt([
+                {
+                    name: "employee",
+                    type: "list",
+                    message: "Which employee would you like to update roles?",
+                    choices: empArray
+                },
+                {
+                    name: "role_id",
+                    type: "list",
+                    message: "Which role would you like to update this employee to?",
+                    choices: roleArray
+                }
+
+            ])
+                .then((answer) => {
+                    console.log(answer);
+                    db.updateEmployee(answer)
+                }).then(() => menu())
+        })
     })
-    // USE ADDROLES TO FIGURE THIS OUT
 
 }
