@@ -135,7 +135,7 @@ function deleteEmployees() {
         ])
             .then((answer) => {
                 console.log(answer);
-                db.deleteEmployee(answer)
+                db.deleteEmployee(answer.id)
             }).then(() => menu())
     }
     )
