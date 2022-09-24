@@ -81,10 +81,12 @@ function addEmployees() {
             value: id
         }));
         db.findEmployees().then(([data]) => {
-            let managerArray = data.map(({ id, first_name, last_name}) => ({
+            let managerArray = data.map(({ id, first_name, last_name }) => ({
                 name: first_name + " " + last_name,
                 value: id
             }))
+            
+            managerArray.unshift({ name: 'null', value: null });
             inquirer.prompt([
                 {
                     name: "first_name",
@@ -135,7 +137,7 @@ function deleteEmployees() {
         ])
             .then((answer) => {
                 console.log(answer);
-                db.deleteEmployee(answer.id)
+                db.deleteEmployee(answer.employee)
             }).then(() => menu())
     }
     )
@@ -193,8 +195,8 @@ function updateRole() {
             value: id
         }));
         db.findRoles().then(([data]) => {
-            const roleArray = data.map(({ id, role_id }) => ({
-                name: role_id,
+            const roleArray = data.map(({ id, title }) => ({
+                name: title,
                 value: id
             }))
 
